@@ -43,8 +43,39 @@ void Game::UpdateModel()
 {
 }
 
+void Game::steerCamera()
+{
+	Vec2 offset = { 0.f, 0.f };
+	const float off = 10.f;
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT) || wnd.kbd.KeyIsPressed('d') || wnd.kbd.KeyIsPressed('D')) {
+		offset.x += off;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_LEFT) || wnd.kbd.KeyIsPressed('a') || wnd.kbd.KeyIsPressed('A')) {
+		offset.x -= off;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_UP) || wnd.kbd.KeyIsPressed('w') || wnd.kbd.KeyIsPressed('W')) {
+		offset.y += off;
+	}
+	if (wnd.kbd.KeyIsPressed(VK_DOWN) || wnd.kbd.KeyIsPressed('s') || wnd.kbd.KeyIsPressed('S')) {
+		offset.y -= off;
+	}
+	while (!wnd.mouse.IsEmpty())
+	{
+		const auto e = wnd.mouse.Read();
+		if (e.GetType() == Mouse::Event::Type::WheelUp) {
+			cam.zoom(1.05f);
+		}
+		if (e.GetType() == Mouse::Event::Type::WheelDown) {
+			cam.zoom(0.95f);
+		}
+	}
+
+	cam.move(offset);
+}
+
 void Game::ComposeFrame()
 {
+	steerCamera();
 	cam.draw(e1.getDrawable());
 
 }

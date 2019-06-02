@@ -22,7 +22,7 @@ public:
 		return pos;
 	}
 	void zoom(float zoom) {
-		zoom_in = zoom;
+		zoom_in *= zoom;
 	}
 	float getZoom() const {
 		return zoom_in;
