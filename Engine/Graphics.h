@@ -24,6 +24,8 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Vec2.h"
+#include "Polyline.hpp"
 
 class Graphics
 {
@@ -57,6 +59,8 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	void DrawLine(Vec2 p1, Vec2 p2, Color color);
+	void DrawClosedPolyline(const Polyline_t& polyline, Color color);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -24,6 +24,10 @@
 #include "Mouse.h"
 #include "Graphics.h"
 
+#include "Camera.hpp"
+#include "Entity.hpp"
+#include "Star.hpp"
+
 class Game
 {
 public:
@@ -42,5 +46,11 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	Vec2 p1{ 50.f, 50.f };
+	Vec2 p2{ 100.f, 100.f };
+
+	Entity e1 = Entity(Star::Make(50.f, 100.f));
+	CoordinatesTransformer ctr;
+	Camera cam;
 	/********************************/
 };

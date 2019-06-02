@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <string>
 #include <array>
+#include <algorithm>
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
@@ -240,6 +241,15 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawClosedPolyline(const Polyline_t& polyline, Color color)
+{
+	for (auto it = polyline.begin(); it < polyline.end()-1; ++it)
+	{
+		DrawLine(*it, *(it + 1), color);
+	}
+	DrawLine(polyline.back(), polyline.front(), color);
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -314,6 +324,51 @@ void Graphics::PutPixel( int x,int y,Color c )
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
+}
+
+void Graphics::DrawLine(Vec2 p1, Vec2 p2, Color color)
+{
+	float a = (p1.y - p2.y) / (p1.x - p2.x);
+	float b;
+	if (abs(a) > 1.f) {
+		a = 1.f / a;
+		b = p1.x - a * p1.y;
+		if (p1.y > p2.y) {
+			std::swap(p1, p2);
+		}
+		for (int y = std::max(int(p1.y), 0); y < std::min(int(p2.y), Graphics::ScreenHeight - 1); y++)
+		{
+			int x = int(y * a + b);
+			if (x < 0) {
+				if (a < 0.f) break;
+				continue;
+			}
+			else if (x > Graphics::ScreenWidth - 1) {
+				if (a > 0.f) break;
+				continue;
+			}
+			PutPixel(x, y, color);
+		}
+	}
+	else {
+		b = p1.y - a * p1.x;
+		if (p1.x > p2.x) {
+			std::swap(p1, p2);
+		}
+		for (int x = std::max(int(p1.x), 0); x < std::min(int(p2.x), Graphics::ScreenWidth - 1); x++)
+		{
+			int y = int(x * a + b);
+			if (y < 0) {
+				if (a < 0.f) break;
+				continue;
+			}
+			else if (y > Graphics::ScreenHeight - 1) {
+				if (a > 0.f) break;
+				continue;
+			}
+			PutPixel(x, y, color);
+		}
+	}
 }
 
 

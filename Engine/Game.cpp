@@ -20,11 +20,14 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Star.hpp"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ctr(gfx),
+	cam(ctr)
 {
 }
 
@@ -42,4 +45,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	cam.draw(e1.getDrawable());
+
 }
