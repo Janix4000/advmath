@@ -53,5 +53,7 @@ private:
 	Entity e1 = Entity(Star::Make(50.f, 100.f));
 	CoordinatesTransformer ctr;
 	Camera cam;
+	Vec2 lastClickPos = { 0.f, 0.f };
+	bool wasPressed = false;
 	/********************************/
 };

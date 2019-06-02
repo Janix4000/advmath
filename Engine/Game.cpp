@@ -22,6 +22,7 @@
 #include "Game.h"
 #include "Star.hpp"
 
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
@@ -70,6 +71,21 @@ void Game::steerCamera()
 		}
 	}
 
+	if (wnd.mouse.LeftIsPressed()) {
+		auto [x, y] = wnd.mouse.GetPos();
+		Vec2 mousePos(float(x), float(-y));
+		mousePos /= cam.getZoom();
+		if (!wasPressed) {
+			wasPressed = true;
+			lastClickPos = mousePos;
+		}
+		auto diff = lastClickPos - mousePos;
+		cam.move(diff);
+		lastClickPos = mousePos;
+	}
+	else {
+		wasPressed = false;
+	}
 	cam.move(offset);
 }
 
