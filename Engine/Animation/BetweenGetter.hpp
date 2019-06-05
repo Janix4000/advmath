@@ -6,8 +6,7 @@
 #include <string>
 #include <iostream>
 
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/Rect.hpp>
+#include "../Colors.h"
 
 namespace rat
 {
@@ -22,37 +21,22 @@ namespace gui
         }
     };
 
-    template <>
-    struct BetweenGetter<sf::Color>
-    {
-        sf::Color operator()(const sf::Color& from, const sf::Color& to, float t)
-        {
-            float r = (float(to.r) - float(from.r)) * t + float(from.r);
-            float g = (float(to.g) - float(from.g)) * t + float(from.g);
-            float b = (float(to.b) - float(from.b)) * t + float(from.b);
+	template <>
+	struct BetweenGetter<Color>
+	{
+		Color operator()(const Color& from, const Color& to, float t)
+		{
+			float r = (float(to.GetR()) - float(from.GetR())) * t + float(from.GetR());
+			float g = (float(to.GetG()) - float(from.GetG())) * t + float(from.GetG());
+			float b = (float(to.GetB()) - float(from.GetB())) * t + float(from.GetB());
 
-            return {
-                static_cast<sf::Uint8>(std::clamp(r, 0.f, 255.f)),
-                static_cast<sf::Uint8>(std::clamp(g, 0.f, 255.f)),
-                static_cast<sf::Uint8>(std::clamp(b, 0.f, 255.f))
-            };
-        }
-    };
-
-    template <>
-    struct BetweenGetter<sf::FloatRect>
-    {
-        sf::FloatRect operator()(const sf::FloatRect& from, const sf::FloatRect& to, float t)
-        {
-            return {{
-                (to.left - from.left) * t + from.left,
-                (to.top - from.top) * t + from.top
-            }, {
-                (to.width - from.width) * t + from.width,
-                (to.height - from.height) * t + from.height
-            }};
-        }
-    };
+			return {
+				static_cast<sf::Uint8>(std::clamp(r, 0.f, 255.f)),
+				static_cast<sf::Uint8>(std::clamp(g, 0.f, 255.f)),
+				static_cast<sf::Uint8>(std::clamp(b, 0.f, 255.f))
+			};
+		}
+	};
 
     template <>
     struct BetweenGetter<std::string>

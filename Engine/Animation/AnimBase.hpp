@@ -6,21 +6,21 @@ namespace rat
 {
 namespace gui
 {
-    enum AnimType : int
-    {
-		None =		1 << 0,
-        Pos =		1 << 1,
-        Color =		1 << 2,
-        Scroll =	1 << 3,
-        Text =		1 << 4,
-        TexRect =	1 << 5
-    };
+
     class AnimBase
     {
+    private:
+        float _currentTime = 0.f;
+
+		AnimData _data;
+
+        bool _started = false;
+        EasingFunc_t _easing;
+        bool _isAlive = true;
+		int nCurrentTimes = 0;
     public:
 
-        AnimBase(AnimType type) : _type{ type } {}
-		AnimBase() : _type{ AnimType::None } {}
+		AnimBase() = default;
 
         void update(float dt)
         {
@@ -30,6 +30,14 @@ namespace gui
             }
 
             _currentTime += dt;
+			if (_isCycleOver())
+			{
+				int nCycles = floor(_currentTime / _data.inTime);
+				nCurrentTimes += nCycles;
+				if (_data.nTimes == -1 || nCurrentTimes < _data.nTimes) {
+					_currentTime -= float(nCycles) * _data.inTime;
+				}
+			}
 
 			_stepAnimation();
         }
@@ -43,9 +51,41 @@ namespace gui
         {
             _data = data;
         }
-        AnimType getType() const { return _type; }
+		const AnimData& getAnimData() const {
+			return _data;
+		}
+		void reset()
+		{
+			_currentTime = 0.f;
+			nCurrentTimes = 0;
+			_isAlive = true;
+		}
+		bool _isCycleOver() const {
+			return _currentTime >= _data.inTime;
+		}
     protected:
-        float _getTimeProp() const { return _easing(_currentTime / _data.inTime); }
+        float _getTimeProp() const { 
+			float time;
+			switch (_data.direction)
+			{
+			case AnimData::Direction::Forward:
+				time = _currentTime;
+				break;
+			case AnimData::Direction::Rewersed:
+				time = _data.inTime - _currentTime;
+				break;
+			case AnimData::Direction::Alternate:
+				time = _data.inTime - abs(2.f * _currentTime - _data.inTime);
+				break;
+			case AnimData::Direction::AlternateReversed:
+				time = _data.inTime + abs(2.f * _currentTime - _data.inTime);
+				break;
+			default:
+				time = _currentTime;
+				break;
+			}
+			return _easing(time / _data.inTime); 
+		}
 		bool _isOver() const {
 			return _currentTime >= _data.inTime;
 		}
@@ -62,16 +102,10 @@ namespace gui
 
         virtual void _update(){}
         virtual void _finish(){}
-    private:
-        float _currentTime{0.f};
 
-        AnimData _data;
-
-        bool _started{false};
-        std::function<float(float)> _easing;
-        bool _isAlive{true};
-
-        const AnimType _type;
+		bool _isEndReversed() const {
+			return _data.direction == AnimData::Direction::Alternate || _data.direction == AnimData::Direction::Rewersed ? true : false;
+		}
     };
 }
 }

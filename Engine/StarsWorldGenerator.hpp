@@ -14,6 +14,10 @@ public:
 	int nMaxFlares = 8;
 	unsigned char minCol = 127;
 	unsigned char maxCol = 255;
+	float maxDiffScale = 0.7f;
+	float minScale = 0.7f;
+	float minScaleTime = 0.7f;
+	float maxScaleTime = 2.f;
 
 private:
 	Stars_t currentStars; 

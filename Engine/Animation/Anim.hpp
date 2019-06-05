@@ -12,21 +12,21 @@ namespace rat
 {
 namespace gui
 {
-    template<typename W, typename T, AnimType type = AnimType::None>
+    template<typename W, typename T>
     class Anim : public AnimBase
     {
     public:
         using Setter_t =  std::function<void (W*, const T&)>;
         Anim(W& owner, Setter_t setter)
         :
-        AnimBase(type),
+        AnimBase(),
         _owner(&owner),
         _setter(setter)
         {
         }
 		Anim(Setter_t setter)
 			:
-			AnimBase(type),
+			AnimBase(),
 			_setter(setter)
 		{
 		}
@@ -48,12 +48,23 @@ namespace gui
 			_stepAnimation();
 			_owner = nullptr;
 		}
+		T getStartValue() const {
+			return _start;
+		}
+		T getEndValue() const {
+			return _end;
+		}
 
     protected:
         virtual void _finish() override
         {
-			if(_owner)
-				_setter(_owner, _end);
+			if (_owner)
+			{
+				if(_isEndReversed())
+					_setter(_owner, _start);
+				else
+					_setter(_owner, _end);
+			}
         }
         virtual void _update() override
         {
@@ -62,10 +73,10 @@ namespace gui
 				_setter(_owner, _bGetter(_start, _end, prop));
 			}
         }
-
+		
     
     private:
-        W  * const _owner = nullptr;
+        W  * _owner = nullptr;
         const Setter_t _setter;
 
         BetweenGetter<T> _bGetter;
@@ -73,5 +84,8 @@ namespace gui
         T _start;
         T _end;
     };
+
+	template <typename W, typename T>
+	Anim(std::function<void(W*, const T&)>) -> Anim<W, T>;
 }
 }

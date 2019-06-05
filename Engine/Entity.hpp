@@ -28,7 +28,7 @@ public:
 	float getScale() const {
 		return scale;
 	}
-	void setColor(Color color) {
+	void setColor(const Color& color) {
 		this->color = color;
 	}
 	Color getColor() const {

@@ -34,7 +34,8 @@ Game::Game( MainWindow& wnd )
 	StarsWorldGenerator starsGen;
 	starsGen.nStars = 100;
 	starsGen.wordlSize = { 6000, 4000 };
-
+	starsGen.maxRadius = 120.f;
+	starsGen.minRadius = 90.f;
 	stars = starsGen.createStars();
 }
 
@@ -61,6 +62,9 @@ void Game::ComposeFrame()
 	const float dt = timer.Mark();
 	steerCamera();
 	cam.draw(e1.getDrawable());
+	for (auto& star : stars) {
+		star.update(dt);
+	}
 	for (const auto& star : stars) {
 		cam.draw(star.getDrawable());
 	}
