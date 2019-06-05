@@ -28,6 +28,12 @@ public:
 	float getScale() const {
 		return scale;
 	}
+	void setColor(Color color) {
+		this->color = color;
+	}
+	Color getColor() const {
+		return color;
+	}
 
 	Drawable getDrawable() const {
 		Drawable d(model, color);

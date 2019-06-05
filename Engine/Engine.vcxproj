@@ -138,6 +138,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation\Anim.hpp" />
+    <ClInclude Include="Animation\AnimBase.hpp" />
+    <ClInclude Include="Animation\AnimData.hpp" />
+    <ClInclude Include="Animation\BetweenGetter.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CameraSteering.hpp" />
     <ClInclude Include="ChiliException.h" />
@@ -155,13 +159,17 @@
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Polyline.hpp" />
+    <ClInclude Include="Random.hpp" />
     <ClInclude Include="RectI.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
+    <ClInclude Include="StarDude.hpp" />
+    <ClInclude Include="StarsWorldGenerator.hpp" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\Anim.cpp" />
     <ClCompile Include="CameraSteering.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="DXErr.cpp" />
@@ -175,6 +183,8 @@
     <ClCompile Include="RectI.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Star.hpp" />
+    <ClCompile Include="StarDude.cpp" />
+    <ClCompile Include="StarsWorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">

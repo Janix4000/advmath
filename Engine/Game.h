@@ -27,7 +27,7 @@
 #include "Camera.hpp"
 #include "CameraSteering.hpp"
 #include "Entity.hpp"
-#include "Star.hpp"
+#include "StarDude.hpp"
 
 #include "FrameTimer.h"
 
@@ -59,6 +59,6 @@ private:
 	Vec2 p1{ 50.f, 50.f };
 	Vec2 p2{ 100.f, 100.f };
 
-	
+	std::vector<StarDude> stars;
 	/********************************/
 };

@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Star.hpp"
+#include "StarsWorldGenerator.hpp"
 
 
 Game::Game( MainWindow& wnd )
@@ -30,6 +31,11 @@ Game::Game( MainWindow& wnd )
 	ctr(gfx),
 	cam(ctr)
 {
+	StarsWorldGenerator starsGen;
+	starsGen.nStars = 100;
+	starsGen.wordlSize = { 6000, 4000 };
+
+	stars = starsGen.createStars();
 }
 
 void Game::Go()
@@ -55,5 +61,7 @@ void Game::ComposeFrame()
 	const float dt = timer.Mark();
 	steerCamera();
 	cam.draw(e1.getDrawable());
-
+	for (const auto& star : stars) {
+		cam.draw(star.getDrawable());
+	}
 }
