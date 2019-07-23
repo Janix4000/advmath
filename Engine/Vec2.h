@@ -61,6 +61,27 @@ public:
 		norm.Normalize();
 		return norm;
 	}
+	_Vec2&	Rotate(float sinT, float cosT)
+	{
+		const T newx = x * cosT - y * sinT;
+		const T newy = x * sinT + y * cosT;
+		x = newx;
+		y = newy;
+		return *this;
+	}
+	_Vec2&	Rotate(float angle)
+	{
+		return Rotate(sin(angle), cos(angle));
+	}
+	_Vec2	GetRotated(float sinT, float cosT) const
+	{
+		auto vec = *this;
+		return vec.Rotate(sinT, cosT);
+	}
+	_Vec2	GetRotated(float angle) const
+	{
+		return GetRotated(sin(angle), cos(angle));
+	}
 	T		operator*( const _Vec2& rhs ) const
 	{
 		return x * rhs.x + y * rhs.y;
