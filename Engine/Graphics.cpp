@@ -279,7 +279,7 @@ void Graphics::EndFrame()
 	pImmediateContext->IASetInputLayout( pInputLayout.Get() );
 	pImmediateContext->VSSetShader( pVertexShader.Get(),nullptr,0u );
 	pImmediateContext->PSSetShader( pPixelShader.Get(),nullptr,0u );
-	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIrotationLIST );
 	const UINT stride = sizeof( FSQVertex );
 	const UINT offset = 0u;
 	pImmediateContext->IASetVertexBuffers( 0u,1u,pVertexBuffer.GetAddressOf(),&stride,&offset );
@@ -376,10 +376,10 @@ void Graphics::DrawClosedPolyline( const std::vector<Vec2>& verts,Color c )
 	DrawLine( verts.back(),verts.front(),c );
 }
 
-void Graphics::DrawClosedPolyline( const std::vector<Vec2>& verts,const Vec2 & translation,float scale_x,float scale_y,float angle, Color c )
+void Graphics::DrawClosedPolyline( const std::vector<Vec2>& verts,const Vec2 & translation,float scale_x,float scale_y,float rotation, Color c )
 {
-	const float sinT = sin(angle);
-	const float cosT = cos(angle);
+	const float sinT = sin(rotation);
+	const float cosT = cos(rotation);
 	const auto xform = [&]( Vec2 v )
 	{
 		v.x *= scale_x;

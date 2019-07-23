@@ -30,11 +30,11 @@ public:
 		translation.y *= scale_in_y;
 	}
 	void rotate(float theta) {
-		angle += theta;
+		rotation += theta;
 	}
 	void Render( Graphics& gfx ) const
 	{
-		gfx.DrawClosedPolyline( *model, translation, scale_x, scale_y, angle, c );
+		gfx.DrawClosedPolyline( *model, translation, scale_x, scale_y, rotation, c );
 	}
 private:
 	Color c;
@@ -42,5 +42,5 @@ private:
 	Vec2 translation = {0.0f,0.0f};
 	float scale_x = 1.0f;
 	float scale_y = 1.0f;
-	float angle = 0.f;
+	float rotation = 0.f;
 };
