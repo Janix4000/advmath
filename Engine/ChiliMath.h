@@ -2,6 +2,9 @@
 #include <cmath>
 #include "Vec2.h"
 
+constexpr double PI = 3.141592653589793;
+constexpr float F_PI = float(PI);
+
 template<typename T>
 auto sq( T x )
 {
@@ -17,3 +20,4 @@ T DistancePointLine( const _Vec2<T>& p0,const _Vec2<T>& p1,const _Vec2<T>& q )
 
 	return std::abs( a * q.x + b * q.y + c ) / std::sqrt( sq( a ) + sq( b ) );
 }
+
