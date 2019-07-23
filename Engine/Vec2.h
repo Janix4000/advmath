@@ -82,6 +82,16 @@ public:
 	{
 		return GetRotated(sin(angle), cos(angle));
 	}
+	T	GetDet(const _Vec2& rhs) const
+	{
+		return x * rhs.y - y * rhs.x;
+	}
+	float	GetAngleBetween(const _Vec2& rhs) const
+	{
+		const auto dot = *this * rhs;
+		const auto det = GetDet(rhs);
+		return atan2(det, dot);
+	}
 	T		operator*( const _Vec2& rhs ) const
 	{
 		return x * rhs.x + y * rhs.y;

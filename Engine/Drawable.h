@@ -30,7 +30,7 @@ public:
 		translation.y *= scale_in_y;
 	}
 	void Rotate(float theta) {
-		rotation += theta;
+		rotation -= theta;
 		translation.Rotate(theta);
 	}
 	void Render( Graphics& gfx ) const

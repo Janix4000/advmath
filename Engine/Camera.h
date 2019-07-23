@@ -27,6 +27,7 @@ public:
 	{
 		drawable.Translate( -pos );
 		drawable.Scale( scale );
+		drawable.Rotate(rotation);
 		ct.Draw( drawable );
 	}
 	void SetScale( float s )

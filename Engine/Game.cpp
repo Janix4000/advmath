@@ -94,9 +94,8 @@ void Game::ComposeFrame()
 {
 	auto star = Star::Make(150.f, 60.f);
 	Drawable starDraw(star, Colors::Magenta);
-	starDraw.Translate({ 100.f, 0.f });
-	starDraw.Rotate(time * PI );
-	starDraw.Translate({ -100.f, 0.f });
+	starDraw.Translate({ 150.f, 0.f });
+	starDraw.Rotate(fmod(time * PI / 10, 2.f*PI) );
 	//starDraw.Translate({ time * 100.f, 0.f });
 	cam.Draw(starDraw);
 	/*cam.Draw( plank.GetDrawable() );
