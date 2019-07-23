@@ -279,7 +279,7 @@ void Graphics::EndFrame()
 	pImmediateContext->IASetInputLayout( pInputLayout.Get() );
 	pImmediateContext->VSSetShader( pVertexShader.Get(),nullptr,0u );
 	pImmediateContext->PSSetShader( pPixelShader.Get(),nullptr,0u );
-	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIrotationLIST );
+	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	const UINT stride = sizeof( FSQVertex );
 	const UINT offset = 0u;
 	pImmediateContext->IASetVertexBuffers( 0u,1u,pVertexBuffer.GetAddressOf(),&stride,&offset );

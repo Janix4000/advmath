@@ -47,7 +47,7 @@ public:
 	{
 		Drawable d( model,c );
 		d.Scale( scale );
-		d.rotate( rotation );
+		d.Rotate( rotation );
 		d.Translate( pos );
 		return d;
 	}

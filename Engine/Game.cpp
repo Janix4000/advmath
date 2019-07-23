@@ -94,7 +94,10 @@ void Game::ComposeFrame()
 {
 	auto star = Star::Make(150.f, 60.f);
 	Drawable starDraw(star, Colors::Magenta);
-	starDraw.rotate(time * PI);
+	starDraw.Translate({ 100.f, 0.f });
+	starDraw.Rotate(time * PI );
+	starDraw.Translate({ -100.f, 0.f });
+	//starDraw.Translate({ time * 100.f, 0.f });
 	cam.Draw(starDraw);
 	/*cam.Draw( plank.GetDrawable() );
 	for( const auto& ball : balls )

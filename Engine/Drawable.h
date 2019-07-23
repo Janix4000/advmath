@@ -29,8 +29,9 @@ public:
 		translation.x *= scale_in_x;
 		translation.y *= scale_in_y;
 	}
-	void rotate(float theta) {
+	void Rotate(float theta) {
 		rotation += theta;
+		translation.Rotate(theta);
 	}
 	void Render( Graphics& gfx ) const
 	{

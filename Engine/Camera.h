@@ -37,6 +37,9 @@ public:
 	{
 		return scale;
 	}
+	void SetRotation(float rotation) {
+		this->rotation = rotation;
+	}
 	RectF GetViewportRect() const
 	{
 		const float zoom = 1.0f / scale;
@@ -50,5 +53,6 @@ public:
 private:
 	Vec2 pos = {0.0f,0.0f};
 	float scale = 1.0f;
+	float rotation = 0.f;
 	CoordinateTransformer& ct;
 };
