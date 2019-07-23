@@ -61,8 +61,9 @@ private:
 	CoordinateTransformer ct;
 	Camera cam;
 	MouseCameraController camCtrl;
-	Plank plank;
+	/*Plank plank;
 	std::vector<Ball> balls;
-	SpawnPoint spawn;
+	SpawnPoint spawn;*/
+	float time = 0.f;
 	/********************************/
 };
