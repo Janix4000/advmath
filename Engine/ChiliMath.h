@@ -2,6 +2,8 @@
 #include <cmath>
 #include "Vec.hpp"
 
+constexpr float PI = 3.14159265359f;
+
 template<typename T>
 auto sq( T x )
 {
