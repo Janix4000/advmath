@@ -20,7 +20,7 @@
  ******************************************************************************************/
 #pragma once
 #include <queue>
-#include "Vec2.h"
+#include "Vec.hpp"
 
 class Mouse
 {

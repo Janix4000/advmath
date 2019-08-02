@@ -246,3 +246,4 @@ ModelManifest.xml
 
 # Precompiled Shader Header Files
 *.shh
+/Engine/Transformations

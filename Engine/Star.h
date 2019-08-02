@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Vec2.h"
+#include "Vec.hpp"
 
 class Star
 {

@@ -25,7 +25,7 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
-#include "Vec2.h"
+#include "Vec.hpp"
 
 class Graphics
 {

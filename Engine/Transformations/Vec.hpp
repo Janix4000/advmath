@@ -78,28 +78,28 @@ public:
 		return imp_addeq(rhs, std::make_index_sequence<D>());
 	}
 	Vec operator+(const Vec& rhs) const {
-		auto& vec = *this;
+		auto vec = *this;
 		return (vec += rhs);
 	}
 	Vec& operator-=(const Vec& rhs) {
 		return imp_subeq(rhs, std::make_index_sequence<D>());
 	}
 	Vec operator-(const Vec& rhs) const {
-		auto& vec = *this;
+		auto vec = *this;
 		return (vec -= rhs);
 	}
 	Vec& operator*=(const T& scalar) {
 		return imp_muleq(scalar, std::make_index_sequence<D>());
 	}
 	Vec operator*(const T& scalar) const {
-		auto& vec = *this;
+		auto vec = *this;
 		return (vec *= scalar);
 	}
 	Vec& operator/=(const T& scalar) {
 		return imp_diveq(scalar, std::make_index_sequence<D>());
 	}
 	Vec operator/(const T& scalar) const {
-		auto& vec = *this;
+		auto vec = *this;
 		return (vec /= scalar);
 	}
 	bool operator==(const Vec& rhs) const {
@@ -119,7 +119,7 @@ public:
 		operator/=(getLen());
 	}
 	Vec getNormalized() const {
-		auto& vec = *this;
+		auto vec = *this;
 		vec.normalize();
 		return vec;
 	}
@@ -144,56 +144,56 @@ private:
 
 	template<size_t I, size_t... Is>
 	void fillFrom(const T& filler, std::index_sequence<Is...>) {
-		auto& t = *this;
-		((t[Is + I] = filler), ...);
+		auto& vec = *this;
+		((vec[Is + I] = filler), ...);
 	}
 
 	template<typename... Args, size_t... Is>
 	void imp_assignArgs(std::index_sequence<Is...>, Args... args) {
-		auto& v = *this;
-		( (v[Is] = args), ...);
+		auto& vec = *this;
+		( (vec[Is] = args), ...);
 	}
 	template<size_t... Is>
 	Vec& imp_addeq(const Vec& rhs, std::index_sequence<Is...>) {
-		auto& v = *this;
-		((v[Is] += rhs[Is]), ...);
+		auto& vec = *this;
+		((vec[Is] += rhs[Is]), ...);
 		return *this;
 	}
 	template<size_t... Is>
 	Vec& imp_subeq(const Vec& rhs, std::index_sequence<Is...>) {
-		auto& v = *this;
-		((v[Is] -= rhs[Is]), ...);
+		auto& vec = *this;
+		((vec[Is] -= rhs[Is]), ...);
 		return *this;
 	}
 	template<size_t... Is>
 	Vec& imp_muleq(const T& scalar, std::index_sequence<Is...>) {
-		auto& v = *this;
-		((v[Is] *= scalar), ...);
+		auto& vec = *this;
+		((vec[Is] *= scalar), ...);
 		return *this;
 	}
 	template<size_t... Is>
 	Vec& imp_diveq(const T& scalar, std::index_sequence<Is...> idx) {
-		auto& v = *this;
+		auto& vec = *this;
 		if constexpr (std::is_integral_v<T>) {
-			((v[Is] /= scalar), ...);
+			((vec[Is] /= scalar), ...);
 			return *this;
 		}
 		return imp_muleq(T(1.0) / scalar, idx);
 	}
 	template<size_t... Is>
-	bool imp_eqeq(const Vec& rhs, std::index_sequence<Is...>) {
-		auto& v = *this;
-		return ((v[Is] == rhs[Is]), ...);
+	bool imp_eqeq(const Vec& rhs, std::index_sequence<Is...>) const {
+		const auto& vec = *this;
+		return ((vec[Is] == rhs[Is]), ...);
 	}
 	template<size_t... Is>
 	T imp_dot(const Vec& rhs, std::index_sequence<Is...>) const {
-		const auto& v = *this;
-		return ((v[Is] * rhs[Is]) + ...);
+		const auto& vec = *this;
+		return ((vec[Is] * rhs[Is]) + ...);
 	}
 	template<size_t... Is>
 	T imp_lensq(std::index_sequence<Is...>) const {
-		auto& v = *this;
-		return ((v[Is] * v[Is]) + ...);
+		const auto& vec = *this;
+		return ((vec[Is] * vec[Is]) + ...);
 	}
 };
 
