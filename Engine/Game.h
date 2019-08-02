@@ -50,8 +50,7 @@ private:
 	Cube cube{ 1.f };
 	float t = 0.f;
 
-	std::vector<Vec2> path;
-	size_t i = 0;
+	float z_offset = 2.f;
 
 	FrameTimer ft;
 	/********************************/

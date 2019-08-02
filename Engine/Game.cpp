@@ -42,7 +42,9 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-		t += dt;
+	t += dt;
+	float z_shift = (float(wnd.kbd.KeyIsPressed('W')) - float(wnd.kbd.KeyIsPressed('S'))) * dt * 2.f;
+	z_offset += z_shift;
 	/*if(!wnd.kbd.KeyIsPressed(' '))
 	if (t > 2.f) {
 		t = 0.f;
@@ -63,8 +65,8 @@ void Game::ComposeFrame()
 	auto tzr = TMat3::RotationZ(angle * 0.4f);
 	auto t = txr * tzr * tyr;
 	for (auto& vertex : vertices) {
-		//vertex += { 0.f, 0.f, 1.f };
 		vertex = t * vertex;
+		vertex += { 0.f, 0.f, z_offset };
 		PC3Transformer::Transform(vertex);
 	}
 	const auto c = Colors::White;
