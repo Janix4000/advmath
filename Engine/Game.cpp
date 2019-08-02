@@ -45,5 +45,17 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-
+	auto lines = cube.getLines();
+	auto& vertices = lines.vertices;
+	auto& indices = lines.indices;
+	for (auto& vertex : vertices) {
+		vertex += { 0.f, 0.f, 1.f };
+		PC3Transformer::Transform(vertex);
+	}
+	const auto c = Colors::White;
+	for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 2)) {
+		auto& v0 = vertices[*it];
+		auto& v1 = vertices[*std::next(it)];
+		gfx.DrawLine(v0, v1, c);
+	}
 }

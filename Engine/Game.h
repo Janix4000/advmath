@@ -23,10 +23,10 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Star.h"
 #include "FrameTimer.h"
-#include <random>
-#include "Sound.h"
+
+#include "PC3Transformer.hpp"
+#include "Cube.hpp"
 
 class Game
 {
@@ -46,6 +46,8 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+
+	Cube cube{ 1.f };
 
 	FrameTimer ft;
 	/********************************/
