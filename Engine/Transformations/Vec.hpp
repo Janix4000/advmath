@@ -126,7 +126,7 @@ public:
 	T getDot(const Vec& rhs) const {
 		return imp_dot(rhs, std::make_index_sequence<D>());
 	}
-	T operator*(const Vec& rhs) {
+	T operator*(const Vec& rhs) const {
 		return getDot(rhs);
 	}
 private:

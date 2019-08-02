@@ -252,6 +252,8 @@ Graphics::~Graphics()
 	if( pImmediateContext ) pImmediateContext->ClearState();
 }
 
+
+
 void Graphics::EndFrame()
 {
 	HRESULT hr;
@@ -395,6 +397,87 @@ void Graphics::DrawClosedPolyline( const std::vector<Vec2>& verts,const Vec2 & t
 		cur = next;
 	}
 	DrawLine( cur,front,c );
+}
+
+void Graphics::DrawTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c)
+{
+	const Vec2* pv0 = &v0;
+	const Vec2* pv1 = &v1;
+	const Vec2* pv2 = &v2;
+
+	if (pv1->y < pv0->y) std::swap(pv0, pv1);
+	if (pv2->y < pv1->y) std::swap(pv1, pv2);
+	if (pv1->y < pv0->y) std::swap(pv0, pv1);
+
+	if (pv1->y == pv0->y) {
+		if (pv1->x < pv0->x) std::swap(pv0, pv1);
+		DrawFlatTopTriangle(*pv0, *pv1, *pv2, c);
+	}
+	else if (pv1->y == pv2->y) {
+		if (pv2->x < pv1->x) std::swap(pv2, pv1);
+		DrawFlatBottomTriangle(*pv0, *pv1, *pv2, c);
+	}
+	else {
+		const float alphaSplit = (pv1->y - pv0->y) / (pv2->y - pv0->y);
+		const auto v3 = (*pv0) + ( ((*pv2) - (*pv0)) * alphaSplit);
+		if(v3.x > pv1->x){
+			DrawFlatTopTriangle(*pv1, v3, *pv2, c);
+			DrawFlatBottomTriangle(*pv0, *pv1, v3, c);
+		}
+		else {
+			DrawFlatTopTriangle(v3, *pv1, *pv2, c);
+			DrawFlatBottomTriangle(*pv0, v3, *pv1, c);
+		}
+	}
+
+
+}
+void Graphics::DrawFlatTopTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c)
+{
+	const float a0 = (v2.x - v0.x) / (v2.y - v0.y);
+	const float a1 = (v2.x - v1.x) / (v2.y - v1.y);
+
+	int yBeg = (int)ceil(v0.y - 0.5f);
+	int yEnd = (int)ceil(v2.y - 0.5f);
+	yBeg = std::max(0, yBeg);
+	yEnd = std::min((int)ScreenHeight, yEnd);
+
+	for (int y = yBeg; y < yEnd; ++y) {
+		const float x0 = a0 * (float(y) + 0.5f - v0.y) + v0.x;
+		const float x1 = a1 * (float(y) + 0.5f - v1.y) + v1.x;
+
+		int xBeg = (int)ceil(x0 - 0.5f);
+		int xEnd = (int)ceil(x1 - 0.5f);
+		xBeg = std::max(0, xBeg);
+		xEnd = std::min((int)ScreenWidth, xEnd);
+		for (int x = xBeg; x < xEnd; ++x) {
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+void Graphics::DrawFlatBottomTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c)
+{
+	const float a0 = (v1.x - v0.x) / (v1.y - v0.y);
+	const float a1 = (v2.x - v0.x) / (v2.y - v0.y);
+
+	int yBeg = (int)ceil(v0.y - 0.5f);
+	int yEnd = (int)ceil(v2.y - 0.5f);
+	yBeg = std::max(0, yBeg);
+	yEnd = std::min((int)ScreenHeight, yEnd);
+
+	for (int y = yBeg; y < yEnd; ++y) {
+		const float x0 = a0 * (float(y) + 0.5f - v0.y) + v0.x;
+		const float x1 = a1 * (float(y) + 0.5f - v0.y) + v0.x;
+
+		int xBeg = (int)ceil(x0 - 0.5f);
+		int xEnd = (int)ceil(x1 - 0.5f);
+		xBeg = std::max(0, xBeg);
+		xEnd = std::min((int)ScreenWidth, xEnd);
+		for (int x = xBeg; x < xEnd; ++x) {
+			PutPixel(x, y, c);
+		}
+	}
 }
 
 

@@ -62,7 +62,11 @@ public:
 	void DrawLine( Vec2 p0,Vec2 p1,Color c );
 	void DrawClosedPolyline( const std::vector<Vec2>& verts,Color c );
 	void DrawClosedPolyline( const std::vector<Vec2>& verts,const Vec2& translation,float scale_x,float scale_y,Color c );
+	void DrawTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c);
 	~Graphics();
+private:
+	void DrawFlatTopTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c);
+	void DrawFlatBottomTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, const Color& c);
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
 	Microsoft::WRL::ComPtr<ID3D11Device>				pDevice;

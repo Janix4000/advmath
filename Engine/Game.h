@@ -40,6 +40,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void drawCube();
 	/********************************/
 private:
 	MainWindow& wnd;

@@ -54,7 +54,7 @@ void Game::UpdateModel()
 	}*/
 }
 
-void Game::ComposeFrame()
+void Game::drawCube()
 {
 	auto lines = cube.getLines();
 	auto& vertices = lines.vertices;
@@ -75,6 +75,14 @@ void Game::ComposeFrame()
 		auto& v1 = vertices[*std::next(it)];
 		gfx.DrawLine(v0, v1, c);
 	}
-	/*path.push_back(vertices[i]);
-	gfx.DrawClosedPolyline(path, c);*/
+}
+
+void Game::ComposeFrame()
+{
+	
+
+	float x = wnd.mouse.GetPosX();
+	float y = wnd.mouse.GetPosY();
+
+	gfx.DrawTriangle({ 100.f, 200.f }, { 300.f, 100.f }, { x, y }, Colors::Blue);
 }
