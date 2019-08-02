@@ -22,6 +22,7 @@
 #include "Game.h"
 #include "Star.h"
 #include "ChiliMath.h"
+#include "TransformMat.hpp"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -41,6 +42,14 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+		t += dt;
+	/*if(!wnd.kbd.KeyIsPressed(' '))
+	if (t > 2.f) {
+		t = 0.f;
+		++i;
+		path.clear();
+		std::cout << i << '\n';
+	}*/
 }
 
 void Game::ComposeFrame()
@@ -48,8 +57,14 @@ void Game::ComposeFrame()
 	auto lines = cube.getLines();
 	auto& vertices = lines.vertices;
 	auto& indices = lines.indices;
+	const float angle = PI * t;
+	auto tyr = TMat3::RotationY(angle * 0.5f);
+	auto txr = TMat3::RotationX(angle * 0.6f);
+	auto tzr = TMat3::RotationZ(angle * 0.4f);
+	auto t = txr * tzr * tyr;
 	for (auto& vertex : vertices) {
-		vertex += { 0.f, 0.f, 1.f };
+		//vertex += { 0.f, 0.f, 1.f };
+		vertex = t * vertex;
 		PC3Transformer::Transform(vertex);
 	}
 	const auto c = Colors::White;
@@ -58,4 +73,6 @@ void Game::ComposeFrame()
 		auto& v1 = vertices[*std::next(it)];
 		gfx.DrawLine(v0, v1, c);
 	}
+	/*path.push_back(vertices[i]);
+	gfx.DrawClosedPolyline(path, c);*/
 }
