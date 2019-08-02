@@ -8,7 +8,7 @@ class PC3Transformer {
 public:
 	static Vec3& Transform(Vec3& vec) {
 		vec.x = (vec.x + 1.f) * xFactor;
-		vec.y = (vec.y + 1.f) * yFactor;
+		vec.y = (-vec.y + 1.f) * yFactor;
 		return vec;
 	}
 	static Vec3 GetTransformed(const Vec3& vec) {
