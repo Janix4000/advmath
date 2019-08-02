@@ -78,6 +78,9 @@
     <ClInclude Include="Transformations\Mat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PC3Transformer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
