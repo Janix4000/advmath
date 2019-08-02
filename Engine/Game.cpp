@@ -56,33 +56,76 @@ void Game::UpdateModel()
 
 void Game::drawCube()
 {
-	auto lines = cube.getLines();
-	auto& vertices = lines.vertices;
-	auto& indices = lines.indices;
-	const float angle = PI * t;
-	auto tyr = TMat3::RotationY(angle * 0.5f);
-	auto txr = TMat3::RotationX(angle * 0.6f);
-	auto tzr = TMat3::RotationZ(angle * 0.4f);
-	auto t = txr * tzr * tyr;
-	for (auto& vertex : vertices) {
-		vertex = t * vertex;
-		vertex += { 0.f, 0.f, z_offset };
-		PC3Transformer::Transform(vertex);
-	}
-	const auto c = Colors::White;
-	for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 2)) {
-		auto& v0 = vertices[*it];
-		auto& v1 = vertices[*std::next(it)];
-		gfx.DrawLine(v0, v1, c);
-	}
+	auto drawEdgesCube = [this](const Cube& cube) {
+		auto lines = cube.getLines();
+		auto& vertices = lines.vertices;
+		auto& indices = lines.indices;
+		const float angle = PI * t;
+		auto tyr = TMat3::RotationY(angle * 0.5f);
+		auto txr = TMat3::RotationX(angle * 0.6f);
+		auto tzr = TMat3::RotationZ(angle * 0.4f);
+		auto t = txr * tzr * tyr;
+		for (auto& vertex : vertices) {
+			vertex = t * vertex;
+			vertex += { 0.f, 0.f, z_offset };
+			PC3Transformer::Transform(vertex);
+		}
+		const auto c = Colors::White;
+		for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 2)) {
+			auto& v0 = vertices[*it];
+			auto& v1 = vertices[*std::next(it)];
+			gfx.DrawLine(v0, v1, c);
+		}
+	};
+	
+	auto drawMeshesCube = [this](const Cube& cube) {
+		const Color colors[12] = {
+			Colors::Blue, 
+			Colors::Magenta,
+			Colors::Gray,
+			Colors::Green,
+			Colors::LightGray,
+			Colors::Cyan,
+			Colors::Red,
+			Colors::White,
+			Colors::Yellow,
+			Colors::Blue,
+			Colors::Magenta,
+			Colors::Red
+		};
+		const auto c = Colors::White;
+		auto& triangles = cube.getTriangles();
+		auto& indices = triangles.indices;
+		auto& vertices = triangles.vertices;
+
+		const float angle = PI * t;
+		auto tyr = TMat3::RotationY(angle * 0.5f);
+		auto txr = TMat3::RotationX(angle * 0.6f);
+		auto tzr = TMat3::RotationZ(angle * 0.4f);
+		auto t = txr * tzr * tyr;
+		for (auto& vertex : vertices) {
+			vertex = t * vertex;
+			vertex += { 0.f, 0.f, z_offset };
+			PC3Transformer::Transform(vertex);
+		}
+
+		for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 3)) {
+			auto& v0 = vertices[*it];
+			auto& v1 = vertices[*std::next(it)];
+			auto& v2 = vertices[*std::next(it, 2)];
+			gfx.DrawTriangle(v0, v1, v2, colors[(it - indices.cbegin()) / 3]);
+		}
+	};
+
+	drawMeshesCube(cube);
 }
 
 void Game::ComposeFrame()
 {
 	
+	drawCube();
+	//float x = wnd.mouse.GetPosX();
+	//float y = wnd.mouse.GetPosY();
 
-	float x = wnd.mouse.GetPosX();
-	float y = wnd.mouse.GetPosY();
-
-	gfx.DrawTriangle({ 100.f, 200.f }, { 300.f, 100.f }, { x, y }, Colors::Blue);
+	//gfx.DrawTriangle({ 100.f, 200.f }, { 300.f, 100.f }, { x, y }, Colors::Blue);
 }
