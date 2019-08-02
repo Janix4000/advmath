@@ -75,9 +75,6 @@
     <ClInclude Include="Transformations\Vec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transformations\Mat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PC3Transformer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -85,6 +82,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IndexedLineList.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations\Utility\Mat.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations\TransformMat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,9 +16,48 @@ public:
 	static TMat Rotation(float sinT, float cosT) {
 		auto rot = TMat::Unit();
 		rot[0][0] = cosT;
-		rot[0][1] = -sinT;
 		rot[1][0] = sinT;
+
+		rot[0][1] = -sinT;
 		rot[1][1] = cosT;
+		return rot;
+	}
+};
+
+template <typename T, typename TMat>
+class TMat_Unq_Methods<3, T, TMat> : public Mat<3 + 1, T>
+{
+public:
+	static TMat RotationZ(float angle) {
+		return RotationZ(sin(angle), cos(angle));
+	}
+	static TMat RotationZ(float sinT, float cosT) {
+		auto rot = TMat::Unit();
+		rot[0][0] = cosT;	rot[0][1] = -sinT;
+
+		rot[1][0] = sinT;	rot[1][1] = cosT;
+		return rot;
+	}
+	static TMat RotationY(float angle) {
+		return RotationY(sin(angle), cos(angle));
+	}
+	static TMat RotationY(float sinT, float cosT) {
+		auto rot = TMat::Unit();
+		rot[0][0] = cosT;	rot[0][2] = sinT;
+		
+		rot[2][0] = -sinT;	rot[2][2] = cosT;
+
+		return rot;
+	}
+	static TMat RotationX(float angle) {
+		return RotationX(sin(angle), cos(angle));
+	}
+	static TMat RotationX(float sinT, float cosT) {
+		auto rot = TMat::Unit();
+		rot[1][1] = cosT;	rot[1][2] = -sinT;
+		
+		rot[2][1] = sinT;	rot[2][2] = cosT;
+
 		return rot;
 	}
 };
@@ -78,8 +117,9 @@ private:
 		const auto& mat = *this;
 		for (size_t row = 0; row < D; row++)
 		{
-			((vout[row] += vec[row] * mat[row][Is]), ...);
-			vout[row] += mat[row][D];
+			auto& coord = vout[row];
+			((coord += vec[Is] * mat[row][Is]), ...);
+			coord += mat[row][D];
 		}
 		return vout;
 	}

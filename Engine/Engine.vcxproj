@@ -159,7 +159,8 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Star.h" />
-    <ClInclude Include="Transformations\Mat.hpp" />
+    <ClInclude Include="Transformations\TransformMat.hpp" />
+    <ClInclude Include="Transformations\Utility\Mat.hpp" />
     <ClInclude Include="Transformations\Utility\VecRows.hpp" />
     <ClInclude Include="Transformations\Vec.hpp" />
   </ItemGroup>
