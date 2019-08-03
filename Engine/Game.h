@@ -48,10 +48,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 
-	Cube cube{ 1.f };
-	float t = 0.f;
-
-	float z_offset = 2.f;
 
 	FrameTimer ft;
 	/********************************/

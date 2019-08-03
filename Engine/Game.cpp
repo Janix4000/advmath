@@ -42,9 +42,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	t += dt;
-	float z_shift = (float(wnd.kbd.KeyIsPressed('W')) - float(wnd.kbd.KeyIsPressed('S'))) * dt * 2.f;
-	z_offset += z_shift;
+	
 	/*if(!wnd.kbd.KeyIsPressed(' '))
 	if (t > 2.f) {
 		t = 0.f;
@@ -56,7 +54,7 @@ void Game::UpdateModel()
 
 void Game::drawCube()
 {
-	auto drawEdgesCube = [this](const Cube& cube) {
+	/*auto drawEdgesCube = [this](const Cube& cube) {
 		auto lines = cube.getLines();
 		auto& vertices = lines.vertices;
 		auto& indices = lines.indices;
@@ -76,32 +74,10 @@ void Game::drawCube()
 			auto& v1 = vertices[*std::next(it)];
 			gfx.DrawLine(v0, v1, c);
 		}
-	};
+	};*/
 	
 	auto drawMeshesCube = [this](const Cube& cube) {
-		const std::vector<Color> colors = {
-			Colors::Blue, 
-			Colors::Magenta,
-			Colors::Gray,
-			Colors::Green,
-			Colors::LightGray,
-			Colors::Cyan,
-			Colors::White,
-			Colors::Red,
-			Colors::Yellow,
-			Colors::Blue,
-			Colors::Magenta,
-			Colors::Red
-		};
-
-		const float angle = PI * t;
-		auto tyr = TMat3::RotationY(angle * 0.5f);
-		auto txr = TMat3::RotationX(angle * 0.6f);
-		auto tzr = TMat3::RotationZ(angle * 0.4f);
-		auto tt = TMat3::Translation({ 0.f, 0.f, z_offset });
-		auto transform = tt * txr * tzr * tyr;
-
-		gfx.DrawMesh(std::move(cube.getTriangles(colors)), transform);
+		
 	};
 
 	drawMeshesCube(cube);

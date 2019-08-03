@@ -145,6 +145,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="COMInitializer.h" />
     <ClInclude Include="Cube.hpp" />
+    <ClInclude Include="CubeScene.hpp" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
@@ -157,6 +158,8 @@
     <ClInclude Include="PC3Transformer.hpp" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="RotationController.hpp" />
+    <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Star.h" />
@@ -167,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="COMInitializer.cpp" />
+    <ClCompile Include="CubeScene.cpp" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
