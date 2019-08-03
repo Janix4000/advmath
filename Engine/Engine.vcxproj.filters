@@ -105,6 +105,9 @@
     <ClInclude Include="ScenesManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ColladingCubesScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
@@ -141,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CubeScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColladingCubesScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

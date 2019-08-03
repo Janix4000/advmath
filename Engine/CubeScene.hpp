@@ -4,9 +4,7 @@
 #include "RotationController.hpp"
 
 class CubeScene : public Scene {
-
 	Cube cube{ 1.f };
-	float t = 0.f;
 	float z_offset = 2.f;
 	RotationController rotControl;
 	Vec3 rot;

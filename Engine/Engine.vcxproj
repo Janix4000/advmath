@@ -142,6 +142,7 @@
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliMath.h" />
     <ClInclude Include="ChiliWin.h" />
+    <ClInclude Include="ColladingCubesScene.hpp" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="COMInitializer.h" />
     <ClInclude Include="Cube.hpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Transformations\Vec.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColladingCubesScene.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="CubeScene.cpp" />
     <ClCompile Include="DXErr.cpp" />

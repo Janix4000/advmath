@@ -23,7 +23,9 @@
 #include "Star.h"
 #include "ChiliMath.h"
 #include "TransformMat.hpp"
+
 #include "CubeScene.hpp"
+#include "ColladingCubesScene.hpp"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -31,6 +33,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 {
 	scenes.addScene< CubeScene >();
+	scenes.addScene< ColladingCubesScene >();
 }
 
 void Game::Go()
@@ -68,11 +71,7 @@ void Game::UpdateModel()
 //		auto lines = cube.getLines();
 //		auto& vertices = lines.vertices;
 //		auto& indices = lines.indices;
-//		const float angle = PI * t;
-//		auto tyr = TMat3::RotationY(angle * 0.5f);
-//		auto txr = TMat3::RotationX(angle * 0.6f);
-//		auto tzr = TMat3::RotationZ(angle * 0.4f);
-//		auto t = txr * tzr * tyr;
+//		
 //		for (auto& vertex : vertices) {
 //			vertex = t * vertex;
 //			vertex += { 0.f, 0.f, z_offset };
