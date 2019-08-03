@@ -53,9 +53,9 @@ template<typename T, typename VecD>
 class Vec_Unq_Methods<3, T, VecD> : public Vec_Rows<3, T> {
 public:
 	VecD getCross(const VecD& rhs) const {
-		T& _x = Vec_Rows<3, T>::x;
-		T& _y = Vec_Rows<3, T>::y;
-		T& _z = Vec_Rows<3, T>::z;
+		const T& _x = Vec_Rows<3, T>::x;
+		const T& _y = Vec_Rows<3, T>::y;
+		const T& _z = Vec_Rows<3, T>::z;
 		return VecD {
 			_z * rhs.y - _y * rhs.z,
 			_x * rhs.z - _z * rhs.x,
