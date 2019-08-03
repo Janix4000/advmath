@@ -79,7 +79,7 @@ void Game::drawCube()
 	};
 	
 	auto drawMeshesCube = [this](const Cube& cube) {
-		const Color colors[12] = {
+		const std::vector<Color> colors = {
 			Colors::Blue, 
 			Colors::Magenta,
 			Colors::Gray,
@@ -101,7 +101,7 @@ void Game::drawCube()
 		auto tt = TMat3::Translation({ 0.f, 0.f, z_offset });
 		auto transform = tt * txr * tzr * tyr;
 
-		gfx.DrawMesh(std::move(cube.getTriangles()), colors, transform);
+		gfx.DrawMesh(std::move(cube.getTriangles(colors)), transform);
 	};
 
 	drawMeshesCube(cube);

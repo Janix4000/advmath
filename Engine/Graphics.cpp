@@ -242,7 +242,7 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
-void Graphics::DrawMesh(IndexedTriangleList&& mesh, const Color& c, const TMat3& transform)
+void Graphics::DrawMesh(IndexedTriangleList&& mesh, const TMat3& transform)
 {
 	auto& indices = mesh.indices;
 	auto& vertices = mesh.vertices;
@@ -251,60 +251,28 @@ void Graphics::DrawMesh(IndexedTriangleList&& mesh, const Color& c, const TMat3&
 		vertex = transform * vertex;
 	}
 	const size_t nTriangles = indices.size() / 3;
-	std::vector<bool> cullFlags(nTriangles, false);
-	for (size_t i = 0; i < nTriangles; i++)
-	{
-		const auto& v0 = vertices[i];
-		const auto& v1 = vertices[i + 1];
-		const auto& v2 = vertices[i + 2];
-
-		cullFlags[i] = ((v1 - v0) % (v2 - v0)) * v0 > 0.f;
-	}
-	for (auto& vertex : vertices) {
-		PC3Transformer::Transform(vertex);
-	}
-
-	for (size_t i = 0; i < nTriangles; i++) {
-		if (cullFlags[i]) continue;
-
-		const auto& v0 = vertices[i];
-		const auto& v1 = vertices[i + 1];
-		const auto& v2 = vertices[i + 2];
-		DrawTriangle(v0, v1, v2, c);
-	}
-}
-
-void Graphics::DrawMesh(IndexedTriangleList&& mesh, const Color* c, const TMat3& transform)
-{
-	auto& indices = mesh.indices;
-	auto& vertices = mesh.vertices;
-
-	for (auto& vertex : vertices) {
-		vertex = transform * vertex;
-	}
-	const size_t nTriangles = indices.size() / 3;
-	std::vector<bool> cullFlags(nTriangles, false);
 	for (size_t i = 0; i < nTriangles; i++)
 	{
 		const auto& v0 = vertices[indices[i * 3]];
 		const auto& v1 = vertices[indices[i * 3 + 1]];
 		const auto& v2 = vertices[indices[i * 3 + 2]];
 
-		cullFlags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.f;
+		mesh.cullFlags[i] = ((v1 - v0) % (v2 - v0)) * v0 > 0.f;
 	}
 	for (auto& vertex : vertices) {
 		PC3Transformer::Transform(vertex);
 	}
 
 	for (size_t i = 0; i < nTriangles; i++) {
-		if (cullFlags[i]) continue;
+		if (mesh.cullFlags[i]) continue;
 
 		const auto& v0 = vertices[indices[i * 3]];
 		const auto& v1 = vertices[indices[i * 3 + 1]];
 		const auto& v2 = vertices[indices[i * 3 + 2]];
-		DrawTriangle(v0, v1, v2, c[i]);
+		DrawTriangle(v0, v1, v2, mesh.colors[i]);
 	}
 }
+
 
 Graphics::~Graphics()
 {
