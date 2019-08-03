@@ -44,6 +44,13 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	auto& kbd = wnd.kbd;
+	while (!kbd.KeyIsEmpty()) {
+		const auto e = kbd.ReadKey();
+		if (e.GetCode() == VK_TAB && e.IsPress()) {
+			scenes.cycleScenes();
+		}
+	}
 	
 	scenes.update(dt, wnd.kbd, wnd.mouse);
 	/*if(!wnd.kbd.KeyIsPressed(' '))
