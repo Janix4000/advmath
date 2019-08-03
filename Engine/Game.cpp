@@ -23,12 +23,14 @@
 #include "Star.h"
 #include "ChiliMath.h"
 #include "TransformMat.hpp"
+#include "CubeScene.hpp"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd )
 {
+	scenes.addScene< CubeScene >();
 }
 
 void Game::Go()
@@ -43,6 +45,7 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	
+	scenes.update(dt, wnd.kbd, wnd.mouse);
 	/*if(!wnd.kbd.KeyIsPressed(' '))
 	if (t > 2.f) {
 		t = 0.f;
@@ -52,43 +55,42 @@ void Game::UpdateModel()
 	}*/
 }
 
-void Game::drawCube()
-{
-	/*auto drawEdgesCube = [this](const Cube& cube) {
-		auto lines = cube.getLines();
-		auto& vertices = lines.vertices;
-		auto& indices = lines.indices;
-		const float angle = PI * t;
-		auto tyr = TMat3::RotationY(angle * 0.5f);
-		auto txr = TMat3::RotationX(angle * 0.6f);
-		auto tzr = TMat3::RotationZ(angle * 0.4f);
-		auto t = txr * tzr * tyr;
-		for (auto& vertex : vertices) {
-			vertex = t * vertex;
-			vertex += { 0.f, 0.f, z_offset };
-			PC3Transformer::Transform(vertex);
-		}
-		const auto c = Colors::White;
-		for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 2)) {
-			auto& v0 = vertices[*it];
-			auto& v1 = vertices[*std::next(it)];
-			gfx.DrawLine(v0, v1, c);
-		}
-	};*/
-	
-	auto drawMeshesCube = [this](const Cube& cube) {
-		
-	};
-
-	drawMeshesCube(cube);
-}
+//void Game::drawCube()
+//{
+//	/*auto drawEdgesCube = [this](const Cube& cube) {
+//		auto lines = cube.getLines();
+//		auto& vertices = lines.vertices;
+//		auto& indices = lines.indices;
+//		const float angle = PI * t;
+//		auto tyr = TMat3::RotationY(angle * 0.5f);
+//		auto txr = TMat3::RotationX(angle * 0.6f);
+//		auto tzr = TMat3::RotationZ(angle * 0.4f);
+//		auto t = txr * tzr * tyr;
+//		for (auto& vertex : vertices) {
+//			vertex = t * vertex;
+//			vertex += { 0.f, 0.f, z_offset };
+//			PC3Transformer::Transform(vertex);
+//		}
+//		const auto c = Colors::White;
+//		for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 2)) {
+//			auto& v0 = vertices[*it];
+//			auto& v1 = vertices[*std::next(it)];
+//			gfx.DrawLine(v0, v1, c);
+//		}
+//	};*/
+//	
+//	auto drawMeshesCube = [this](const Cube& cube) {
+//		
+//	};
+//
+//	drawMeshesCube(cube);
+//}
 
 void Game::ComposeFrame()
 {
-	
-	drawCube();
-	//float x = wnd.mouse.GetPosX();
-	//float y = wnd.mouse.GetPosY();
+	scenes.draw(gfx);
+	/*float x = wnd.mouse.GetPosX();
+	float y = wnd.mouse.GetPosY();
 
-	//gfx.DrawTriangle({ 100.f, 200.f }, { 300.f, 100.f }, { x, y }, Colors::Blue);
+	gfx.DrawTriangle({ 100.f, 200.f }, { 300.f, 100.f }, { x, y }, Colors::Blue);*/
 }

@@ -26,7 +26,7 @@
 #include "FrameTimer.h"
 
 #include "PC3Transformer.hpp"
-#include "Cube.hpp"
+#include "ScenesManager.hpp"
 
 class Game
 {
@@ -40,14 +40,13 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void drawCube();
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-
+	SceneManager scenes;
 
 	FrameTimer ft;
 	/********************************/

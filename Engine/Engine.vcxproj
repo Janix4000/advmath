@@ -160,6 +160,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RotationController.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="ScenesManager.hpp" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Star.h" />

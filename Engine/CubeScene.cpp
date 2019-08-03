@@ -1,7 +1,7 @@
 #include "CubeScene.hpp"
 #include "ChiliMath.h"
 
-void CubeScene::draw(Graphics gfx) const
+void CubeScene::draw(Graphics& gfx) const
 {
 
 	const std::vector<Color> colors = {
