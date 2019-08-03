@@ -60,6 +60,9 @@ public:
 
 		return rot;
 	}
+	static TMat Rotation(const Vec<3, T>& rotVec) {
+		return RotationX(rotVec.x) * RotationY(rotVec.y) * RotationY(rotVec.z);
+	}
 };
 
 template <size_t D, typename T>
