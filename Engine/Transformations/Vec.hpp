@@ -57,9 +57,9 @@ public:
 		const T& _y = Vec_Rows<3, T>::y;
 		const T& _z = Vec_Rows<3, T>::z;
 		return VecD {
-			_z * rhs.y - _y * rhs.z,
-			_x * rhs.z - _z * rhs.x,
-			_y * rhs.x - _x * rhs.y
+			_y * rhs.z - _z * rhs.y,
+			_z * rhs.x - _x * rhs.z,
+			_x * rhs.y - _y * rhs.x
 		};
 	}
 	VecD operator%(const VecD& rhs) const {
