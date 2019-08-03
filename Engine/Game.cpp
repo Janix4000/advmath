@@ -86,35 +86,22 @@ void Game::drawCube()
 			Colors::Green,
 			Colors::LightGray,
 			Colors::Cyan,
-			Colors::Red,
 			Colors::White,
+			Colors::Red,
 			Colors::Yellow,
 			Colors::Blue,
 			Colors::Magenta,
 			Colors::Red
 		};
-		const auto c = Colors::White;
-		auto& triangles = cube.getTriangles();
-		auto& indices = triangles.indices;
-		auto& vertices = triangles.vertices;
 
 		const float angle = PI * t;
 		auto tyr = TMat3::RotationY(angle * 0.5f);
 		auto txr = TMat3::RotationX(angle * 0.6f);
 		auto tzr = TMat3::RotationZ(angle * 0.4f);
-		auto t = txr * tzr * tyr;
-		for (auto& vertex : vertices) {
-			vertex = t * vertex;
-			vertex += { 0.f, 0.f, z_offset };
-			PC3Transformer::Transform(vertex);
-		}
+		auto tt = TMat3::Translation({ 0.f, 0.f, z_offset });
+		auto transform = tt * txr * tzr * tyr;
 
-		for (auto it = indices.cbegin(), end = indices.cend(); it < end; std::advance(it, 3)) {
-			auto& v0 = vertices[*it];
-			auto& v1 = vertices[*std::next(it)];
-			auto& v2 = vertices[*std::next(it, 2)];
-			gfx.DrawTriangle(v0, v1, v2, colors[(it - indices.cbegin()) / 3]);
-		}
+		gfx.DrawMesh(std::move(cube.getTriangles()), colors, transform);
 	};
 
 	drawMeshesCube(cube);

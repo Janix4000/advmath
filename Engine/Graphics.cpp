@@ -26,6 +26,8 @@
 #include <string>
 #include <array>
 
+#include "PC3Transformer.hpp"
+
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
 namespace FramebufferShaders
@@ -238,6 +240,70 @@ Graphics::Graphics( HWNDKey& key )
 	// allocate memory for sysbuffer (16-byte aligned for faster access)
 	pSysBuffer = reinterpret_cast<Color*>( 
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
+}
+
+void Graphics::DrawMesh(IndexedTriangleList&& mesh, const Color& c, const TMat3& transform)
+{
+	auto& indices = mesh.indices;
+	auto& vertices = mesh.vertices;
+
+	for (auto& vertex : vertices) {
+		vertex = transform * vertex;
+	}
+	const size_t nTriangles = indices.size() / 3;
+	std::vector<bool> cullFlags(nTriangles, false);
+	for (size_t i = 0; i < nTriangles; i++)
+	{
+		const auto& v0 = vertices[i];
+		const auto& v1 = vertices[i + 1];
+		const auto& v2 = vertices[i + 2];
+
+		cullFlags[i] = ((v1 - v0) % (v2 - v0)) * v0 > 0.f;
+	}
+	for (auto& vertex : vertices) {
+		PC3Transformer::Transform(vertex);
+	}
+
+	for (size_t i = 0; i < nTriangles; i++) {
+		if (cullFlags[i]) continue;
+
+		const auto& v0 = vertices[i];
+		const auto& v1 = vertices[i + 1];
+		const auto& v2 = vertices[i + 2];
+		DrawTriangle(v0, v1, v2, c);
+	}
+}
+
+void Graphics::DrawMesh(IndexedTriangleList&& mesh, const Color* c, const TMat3& transform)
+{
+	auto& indices = mesh.indices;
+	auto& vertices = mesh.vertices;
+
+	for (auto& vertex : vertices) {
+		vertex = transform * vertex;
+	}
+	const size_t nTriangles = indices.size() / 3;
+	std::vector<bool> cullFlags(nTriangles, false);
+	for (size_t i = 0; i < nTriangles; i++)
+	{
+		const auto& v0 = vertices[indices[i * 3]];
+		const auto& v1 = vertices[indices[i * 3 + 1]];
+		const auto& v2 = vertices[indices[i * 3 + 2]];
+
+		cullFlags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.f;
+	}
+	for (auto& vertex : vertices) {
+		PC3Transformer::Transform(vertex);
+	}
+
+	for (size_t i = 0; i < nTriangles; i++) {
+		if (cullFlags[i]) continue;
+
+		const auto& v0 = vertices[indices[i * 3]];
+		const auto& v1 = vertices[indices[i * 3 + 1]];
+		const auto& v2 = vertices[indices[i * 3 + 2]];
+		DrawTriangle(v0, v1, v2, c[i]);
+	}
 }
 
 Graphics::~Graphics()
