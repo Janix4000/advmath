@@ -28,6 +28,8 @@
 #include "Entity.hpp"
 #include "Star.hpp"
 
+#include "FrameTimer.h"
+
 class Game
 {
 public:
@@ -47,12 +49,14 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Vec2 p1{ 50.f, 50.f };
-	Vec2 p2{ 100.f, 100.f };
-
 	Entity e1 = Entity(Star::Make(50.f, 100.f));
 	CoordinatesTransformer ctr;
 	Camera cam;
+	FrameTimer timer;
+
+	Vec2 p1{ 50.f, 50.f };
+	Vec2 p2{ 100.f, 100.f };
+
 	Vec2 lastClickPos = { 0.f, 0.f };
 	bool wasPressed = false;
 	/********************************/

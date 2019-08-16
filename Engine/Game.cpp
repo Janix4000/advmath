@@ -91,6 +91,7 @@ void Game::steerCamera()
 
 void Game::ComposeFrame()
 {
+	const float dt = timer.Mark();
 	steerCamera();
 	cam.draw(e1.getDrawable());
 
